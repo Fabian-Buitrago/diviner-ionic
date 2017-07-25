@@ -1,14 +1,36 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      Ionic Blank
+      Guess the secret number
     </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+  <p>You have a total of {{ attempts }} attempts. Luck!</p>
+
+  <ion-input type="number" min="1" max="100" [(ngModel)]="num" placeholder="Enter a number from 1 to 100"></ion-input>
+
+  <p>The secret number is {{ message }}</p>
+
+  <ion-card *ngIf="message=='equal'">
+    <ion-card-header>
+      ¡¡¡Congratulations!!!
+    </ion-card-header>
+    <ion-card-content>
+      You're right, the secret number is {{ num }}
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card *ngIf="attempts==0">
+    <ion-card-header>
+      Game over
+    </ion-card-header>
+    <ion-card-content>
+      You have consumed all the attempts..<br> The secret number was {{ secretNum }}.
+    </ion-card-content>
+  </ion-card>
+
+  <button ion-button block (click)="CheckNumber()" *ngIf="message!=='equal' && attempts!==0">Guess</button>
+  <button ion-button block (click)="replay()" *ngIf="message=='equal' || attempts==0">Play Again</button>
 </ion-content>
